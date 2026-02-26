@@ -1,162 +1,19 @@
-import { useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  Image,
-  Modal,
-  ScrollView,
-  StatusBar,
-  Text,
-  View,
-  FlatList
-} from "react-native";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from '@/screens/HomeScreen';
+import AddWorkoutScreen from '@/screens/AddWorkoutScreen';
+import WorkoutDetailsScreen from '@/screens/WorkoutDetailsScreen';
 
 
-const students = [
-  { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-  { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-   { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-    { name: "fouad", age: 27 },
-  { name: "ibrahim", age: 23 },
-  { name: "younes", age: "22" },
-];
+
+const Stack=createNativeStackNavigator();
 export default function index() {
  
   return (
-   
-   <FlatList data={students} renderItem={({item,index})=>{
-    console.log(index);
-    return (
-   <View key={index}>
-    <Text>{item.name}</Text>
-    <Text>{item.age}</Text>
-    </View>
-   )}}/>
+    <Stack.Navigator initialRouteName="Add">
+      <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+      <Stack.Screen name="Add" component={AddWorkoutScreen}></Stack.Screen>
+      <Stack.Screen name="Detail" component={WorkoutDetailsScreen}></Stack.Screen>
+    </Stack.Navigator>
   );
 }
