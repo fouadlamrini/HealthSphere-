@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, TextInput, Picker, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 export default function AddWorkoutScreen() {
   return (
