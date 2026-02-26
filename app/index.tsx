@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "@/screens/HomeScreen";
-import AddWorkoutScreen from "@/screens/AddWorkoutScreen";
-import WorkoutDetailsScreen from "@/screens/WorkoutDetailsScreen";
+import HomeScreen from "@/src/screens/HomeScreen";
+import AddWorkoutScreen from "@/src/screens/AddWorkoutScreen";
+import WorkoutDetailsScreen from "@/src/screens/WorkoutDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 export default function index() {
