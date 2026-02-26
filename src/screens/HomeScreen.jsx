@@ -1,10 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
-import { Button, Text, View } from "react-native";
-function HomeScreen(){
-    const navigation=useNavigation();
-  return  (<View>
-    <Text>Home Screen</Text>
-    <Button title="click 1" onPress={()=>navigation.navigate("Add")}/>
-  </View>);
+import { View, Text } from "react-native";
+
+export default function HomeScreen() {
+  return (
+    <View>
+      <Text>Home Screen</Text>
+    </View>
+  );
 }
-export default HomeScreen;

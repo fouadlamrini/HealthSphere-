@@ -1,8 +1,9 @@
-import { Button, Text, View } from "react-native";
-function WorkoutDetailsScreen(){
-  return  (<View>
-    <Text>Workout Details Screen</Text>
-    <Button title="click 3"/>
-  </View>);
+import { View, Text } from "react-native";
+
+export default function WorkoutDetailsScreen() {
+  return (
+    <View>
+      <Text>Workout Details Screen</Text>
+    </View>
+  );
 }
-export default WorkoutDetailsScreen;
