@@ -1,5 +1,6 @@
 structure de projet 
 
+App.js
 src/
  ├── screens/
  │    ├── HomeScreen.jsx
