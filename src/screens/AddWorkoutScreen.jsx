@@ -5,6 +5,25 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function AddWorkoutScreen() {
 
+  const addSeance=()=>{
+      const newSeance = {
+    id: Date.now().toString(),
+    type,
+    duration,
+    intensity,
+    date,
+    notes,
+  };
+
+  setSeance([...seance, newSeance]);
+     console.log([...seance, newSeance]);
+  // reset form
+  setType("");
+  setDuration("");
+  setIntensity("");
+  setNotes("");
+  }
+  const [seance,setSeance]=useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -85,7 +104,7 @@ export default function AddWorkoutScreen() {
       />
 
       {/* Bouton Ajouter */}
-      <Button title="Ajouter la séance" onPress={() => {}} />
+     <Button title="Ajouter la séance" onPress={addSeance} />
 
     </View>
   );
