@@ -37,7 +37,18 @@ export default function AddWorkoutScreen() {
     setIntensity("");
     setNotes("");
   };
+useEffect(() => {
+  const loadData = async () => {
+    const storedWorkouts = await getWorkouts();
+    const formatted = storedWorkouts.map(item => ({
+      ...item,
+      date: new Date(item.date),
+    }));
+    setSeance(formatted);
+  };
 
+  loadData();
+}, []);
      const deleteSeance = (id) => {
       const updatedSeance = seance.filter((item) => item.id !== id);
       setSeance(updatedSeance);
