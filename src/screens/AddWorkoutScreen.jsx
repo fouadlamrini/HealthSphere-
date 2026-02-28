@@ -1,6 +1,6 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import {
   Button,
   FlatList,
@@ -10,8 +10,13 @@ import {
   View,
 } from "react-native";
 
+import {
+  saveWorkouts,
+  getWorkouts,
+  clearWorkouts,
+} from "../storage/workoutStorage";
 export default function AddWorkoutScreen() {
-  const addSeance = () => {
+  const addSeance = async () => {
     const newSeance = {
       id: Date.now().toString(),
       type,
@@ -21,7 +26,10 @@ export default function AddWorkoutScreen() {
       notes,
     };
  
-    setSeance([...seance, newSeance]);
+    const updated = [...seance, newSeance];
+
+  setSeance(updated);            
+  await saveWorkouts(updated);
     console.log([...seance, newSeance]);
     // reset form
     setType("");
