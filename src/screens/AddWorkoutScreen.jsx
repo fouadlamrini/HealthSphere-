@@ -20,7 +20,10 @@ export default function AddWorkoutScreen() {
       date,
       notes,
     };
-
+    const deleteSeance = (id) => {
+      const updatedSeance = seance.filter((item) => item.id !== id);
+      setSeance(updatedSeance);
+    };
     setSeance([...seance, newSeance]);
     console.log([...seance, newSeance]);
     // reset form
@@ -119,6 +122,8 @@ export default function AddWorkoutScreen() {
             <Text>Type: {item.type}</Text>
             <Text>Intensité: {item.intensity}</Text>
             <Text>Notes: {item.notes}</Text>
+
+            <Button title="Supprimer" onPress={() => deleteSeance(item.id)} />
           </View>
         )}
       />
