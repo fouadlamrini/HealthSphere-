@@ -1,29 +1,35 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+} from "react-native";
 
 export default function AddWorkoutScreen() {
+  const addSeance = () => {
+    const newSeance = {
+      id: Date.now().toString(),
+      type,
+      duration,
+      intensity,
+      date,
+      notes,
+    };
 
-  const addSeance=()=>{
-      const newSeance = {
-    id: Date.now().toString(),
-    type,
-    duration,
-    intensity,
-    date,
-    notes,
+    setSeance([...seance, newSeance]);
+    console.log([...seance, newSeance]);
+    // reset form
+    setType("");
+    setDuration("");
+    setIntensity("");
+    setNotes("");
   };
-
-  setSeance([...seance, newSeance]);
-     console.log([...seance, newSeance]);
-  // reset form
-  setType("");
-  setDuration("");
-  setIntensity("");
-  setNotes("");
-  }
-  const [seance,setSeance]=useState([]);
+  const [seance, setSeance] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -41,13 +47,10 @@ export default function AddWorkoutScreen() {
 
   return (
     <View style={styles.container}>
-
       {/* Date */}
       <Text style={styles.label}>Date</Text>
       <Button title="Choisir la date" onPress={() => setShow(true)} />
-      <Text style={{ marginTop: 5 }}>
-        {date.toLocaleDateString()}
-      </Text>
+      <Text style={{ marginTop: 5 }}>{date.toLocaleDateString()}</Text>
 
       {show && (
         <DateTimePicker
@@ -104,8 +107,21 @@ export default function AddWorkoutScreen() {
       />
 
       {/* Bouton Ajouter */}
-     <Button title="Ajouter la séance" onPress={addSeance} />
+      <Button title="Ajouter la séance" onPress={addSeance} />
 
+      <FlatList
+        data={seance}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={{ padding: 10, borderBottomWidth: 1 }}>
+            <Text>Date: {item.date.toLocaleDateString()}</Text>
+            <Text>Durée: {item.duration} min</Text>
+            <Text>Type: {item.type}</Text>
+            <Text>Intensité: {item.intensity}</Text>
+            <Text>Notes: {item.notes}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
