@@ -19,3 +19,11 @@ export const getWorkouts = async () => {
     return [];
   }
 };
+//supprimer data
+export const clearWorkouts = async () => {
+  try {
+    await AsyncStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.log("Error clearing workouts:", error);
+  }
+};
