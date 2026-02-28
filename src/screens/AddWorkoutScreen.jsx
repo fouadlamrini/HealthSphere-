@@ -34,6 +34,9 @@ export default function AddWorkoutScreen() {
       const updatedSeance = seance.filter((item) => item.id !== id);
       setSeance(updatedSeance);
     };
+     const deleteAllSeance = () => {
+      setSeance([]);
+    };
   const [seance, setSeance] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -113,6 +116,7 @@ export default function AddWorkoutScreen() {
 
       {/* Bouton Ajouter */}
       <Button title="Ajouter la séance" onPress={addSeance} />
+      <Button title="Supprimer tous les séance" onPress={deleteAllSeance} />
 
       <FlatList
         data={seance}
