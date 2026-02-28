@@ -49,9 +49,10 @@ useEffect(() => {
 
   loadData();
 }, []);
-     const deleteSeance = (id) => {
+     const deleteSeance = async (id) => {
       const updatedSeance = seance.filter((item) => item.id !== id);
       setSeance(updatedSeance);
+        await saveWorkouts(updatedSeance);
     };
      const deleteAllSeance = () => {
       setSeance([]);
