@@ -20,10 +20,7 @@ export default function AddWorkoutScreen() {
       date,
       notes,
     };
-    const deleteSeance = (id) => {
-      const updatedSeance = seance.filter((item) => item.id !== id);
-      setSeance(updatedSeance);
-    };
+ 
     setSeance([...seance, newSeance]);
     console.log([...seance, newSeance]);
     // reset form
@@ -32,6 +29,11 @@ export default function AddWorkoutScreen() {
     setIntensity("");
     setNotes("");
   };
+
+     const deleteSeance = (id) => {
+      const updatedSeance = seance.filter((item) => item.id !== id);
+      setSeance(updatedSeance);
+    };
   const [seance, setSeance] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
