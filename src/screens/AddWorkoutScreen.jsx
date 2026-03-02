@@ -56,7 +56,7 @@ useEffect(() => {
     };
      const deleteAllSeance = async () => {
       setSeance([]);
-      await clearWorkouts();;
+      await clearWorkouts();
     };
   const [seance, setSeance] = useState([]);
   const [date, setDate] = useState(new Date());
