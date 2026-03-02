@@ -1,21 +1,18 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import { useState,useEffect} from "react";
+import { useState } from "react";
 import {
   Button,
-  FlatList,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 
 import {
   saveWorkouts,
-  getWorkouts,
-  clearWorkouts,
 } from "../storage/workoutStorage";
-export default function AddWorkoutScreen() {
+export default function AddWorkoutScreen({ navigation }) {
   const addSeance = async () => {
     const newSeance = {
       id: Date.now().toString(),
@@ -25,46 +22,26 @@ export default function AddWorkoutScreen() {
       date,
       notes,
     };
- 
-    const updated = [...seance, newSeance];
 
-  setSeance(updated);            
-  await saveWorkouts(updated);
-    console.log([...seance, newSeance]);
+    await saveWorkouts([newSeance]);
+    console.log("Séance ajoutée:", newSeance);
+    
     // reset form
     setType("");
     setDuration("");
     setIntensity("");
     setNotes("");
-  };
-useEffect(() => {
-  const loadData = async () => {
-    const storedWorkouts = await getWorkouts();
-    const formatted = storedWorkouts.map(item => ({
-      ...item,
-      date: new Date(item.date),
-    }));
-    setSeance(formatted);
+    
+    // Navigate back to home
+    navigation.goBack();
   };
 
-  loadData();
-}, []);
-     const deleteSeance = async (id) => {
-      const updatedSeance = seance.filter((item) => item.id !== id);
-      setSeance(updatedSeance);
-        await saveWorkouts(updatedSeance);
-    };
-     const deleteAllSeance = async () => {
-      setSeance([]);
-      await clearWorkouts();
-    };
-  const [seance, setSeance] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     setShow(false);
-    if (selectedDate) {
+    if (event.type === 'set' && selectedDate) {
       setDate(selectedDate);
     }
   };
@@ -76,6 +53,8 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Ajouter une séance</Text>
+
       {/* Date */}
       <Text style={styles.label}>Date</Text>
       <Button title="Choisir la date" onPress={() => setShow(true)} />
@@ -87,17 +66,17 @@ useEffect(() => {
           mode="date"
           display="default"
           onChange={onChange}
+          minimumDate={new Date(2020, 0, 1)}
+          maximumDate={new Date(2030, 11, 31)}
         />
       )}
-
-      <Text style={styles.title}>Ajouter une séance</Text>
 
       {/* Type d'activité */}
       <Text style={styles.label}>Type d'activité</Text>
       <Picker
-        style={styles.input}
         selectedValue={type}
         onValueChange={(itemValue) => setType(itemValue)}
+        style={styles.input}
       >
         <Picker.Item label="Course" value="course" />
         <Picker.Item label="Musculation" value="musculation" />
@@ -107,19 +86,19 @@ useEffect(() => {
       {/* Durée */}
       <Text style={styles.label}>Durée (minutes)</Text>
       <TextInput
-        value={duration}
-        onChangeText={(text) => setDuration(text)}
         style={styles.input}
         placeholder="Ex: 45"
         keyboardType="numeric"
+        value={duration}
+        onChangeText={setDuration}
       />
 
       {/* Intensité */}
       <Text style={styles.label}>Intensité</Text>
       <Picker
-        style={styles.input}
         selectedValue={intensity}
         onValueChange={(itemValue) => setIntensity(itemValue)}
+        style={styles.input}
       >
         <Picker.Item label="Faible" value="faible" />
         <Picker.Item label="Moyenne" value="moyenne" />
@@ -129,31 +108,22 @@ useEffect(() => {
       {/* Notes */}
       <Text style={styles.label}>Notes (facultatif)</Text>
       <TextInput
-        value={notes}
-        onChangeText={(text) => setNotes(text)}
         style={styles.input}
         placeholder="Ex: Bonne séance"
+        value={notes}
+        onChangeText={setNotes}
+        multiline
       />
 
-      {/* Bouton Ajouter */}
-      <Button title="Ajouter la séance" onPress={addSeance} />
-      <Button title="Supprimer tous les séance" onPress={deleteAllSeance} />
-
-      <FlatList
-        data={seance}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={{ padding: 10, borderBottomWidth: 1 }}>
-            <Text>Date: {item.date.toLocaleDateString()}</Text>
-            <Text>Durée: {item.duration} min</Text>
-            <Text>Type: {item.type}</Text>
-            <Text>Intensité: {item.intensity}</Text>
-            <Text>Notes: {item.notes}</Text>
-
-            <Button title="Supprimer" onPress={() => deleteSeance(item.id)} />
-          </View>
-        )}
-      />
+      {/* Boutons */}
+      <View style={styles.buttonContainer}>
+        <Button title="Ajouter la séance" onPress={addSeance} />
+        <Button
+          title="Annuler"
+          onPress={() => navigation.goBack()}
+          color="#888"
+        />
+      </View>
     </View>
   );
 }
