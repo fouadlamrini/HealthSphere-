@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+    Alert,
     Button,
     StyleSheet,
     Text,
@@ -10,6 +11,7 @@ import DatePicker from "../components/DatePicker";
 import PickerInput from "../components/PickerInput";
 import CustomTextInput from "../components/TextInput";
 import {
+    getWorkouts,
     saveWorkouts,
 } from "../storage/workoutStorage";
 
@@ -21,6 +23,11 @@ export default function AddWorkoutScreen({ navigation }) {
   const [notes, setNotes] = useState("");
 
   const addSeance = async () => {
+    if (!type || !duration || !intensity) {
+      Alert.alert("Erreur", "Veuillez remplir tous les champs obligatoires");
+      return;
+    }
+
     const newSeance = {
       id: Date.now().toString(),
       type,
@@ -30,17 +37,27 @@ export default function AddWorkoutScreen({ navigation }) {
       notes,
     };
 
-    await saveWorkouts([newSeance]);
-    console.log("Séance ajoutée:", newSeance);
-    
-    // reset form
-    setType("");
-    setDuration("");
-    setIntensity("");
-    setNotes("");
-    
-    // Navigate back to home
-    navigation.goBack();
+    try {
+      // Get existing workouts
+      const existingWorkouts = await getWorkouts();
+      const updatedWorkouts = [...(existingWorkouts || []), newSeance];
+      
+      // Save all workouts
+      await saveWorkouts(updatedWorkouts);
+      console.log("Séance ajoutée:", newSeance);
+      
+      // reset form
+      setType("");
+      setDuration("");
+      setIntensity("");
+      setNotes("");
+      
+      // Navigate back to home
+      navigation.goBack();
+    } catch (error) {
+      console.error("Error adding workout:", error);
+      Alert.alert("Erreur", "Impossible d'ajouter la séance");
+    }
   };
 
   const typeOptions = [

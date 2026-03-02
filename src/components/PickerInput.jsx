@@ -1,6 +1,5 @@
-import React from "react";
-import { Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function PickerInput({ 
   selectedValue, 

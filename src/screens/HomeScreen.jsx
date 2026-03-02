@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Button, FlatList, StyleSheet, Text, View } from "react-native";
+import WorkoutItem from "../components/WorkoutItem";
 import { clearWorkouts, getWorkouts, saveWorkouts } from "../storage/workoutStorage";
 
 export default function HomeScreen({ navigation }) {
@@ -73,24 +74,12 @@ export default function HomeScreen({ navigation }) {
   }, [navigation]);
 
   const renderWorkoutItem = ({ item }) => (
-    <View style={styles.workoutItem}>
-      <TouchableOpacity
-        style={styles.workoutContent}
-        onPress={() => navigation.navigate("WorkoutDetails", { workout: item })}
-      >
-        <Text style={styles.workoutType}>{item.type}</Text>
-        <Text style={styles.workoutInfo}>{item.duration} min - {item.intensity}</Text>
-        <Text style={styles.workoutDate}>
-          {item.date ? new Date(item.date).toLocaleDateString() : 'Date non spécifiée'}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => deleteWorkout(item.id)}
-      >
-        <Text style={styles.deleteButtonText}>Supprimer</Text>
-      </TouchableOpacity>
-    </View>
+    <WorkoutItem
+      workout={item}
+      onPress={(workout) => navigation.navigate("WorkoutDetails", { workout })}
+      onDelete={deleteWorkout}
+      showDelete={true}
+    />
   );
 
   return (
@@ -135,46 +124,6 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     marginBottom: 20,
-  },
-  workoutItem: {
-    backgroundColor: "#f5f5f5",
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  workoutContent: {
-    flex: 1,
-  },
-  deleteButton: {
-    backgroundColor: "#ff4444",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 5,
-    marginLeft: 10,
-  },
-  deleteButtonText: {
-    color: "white",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  workoutType: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  workoutInfo: {
-    fontSize: 14,
-    color: "#666",
-  },
-  workoutDate: {
-    fontSize: 12,
-    color: "#888",
-    marginTop: 3,
   },
   buttonContainer: {
     gap: 10,
